@@ -4,8 +4,10 @@ const app = express();
 const dotenv = require("dotenv");
 const pinRoute = require("./routes/pins");
 const userRoute = require("./routes/users");
-dotenv.config();
+const cors = require("cors");
 
+dotenv.config();
+app.use(cors());
 app.use(express.json());
 
 mongoose.set('strictQuery', false);

@@ -22,7 +22,7 @@ export default function Register({setShowRegister}) {
         }
 
         try {
-            await axios.post("/users/register", newUser);
+            await axios.post("https://messdekho.onrender.com/users/register", newUser);
             setError(false);
             setSuccess(true);
         } catch (error) {
