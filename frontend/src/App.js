@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Map, { Marker, Popup } from 'react-map-gl';
+import Map, { GeolocateControl, Marker, Popup } from 'react-map-gl';
 import RoomIcon from '@mui/icons-material/Room';
 import StarIcon from '@mui/icons-material/Star';
 import "./app.css";
@@ -27,6 +27,11 @@ function App() {
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [rating, setRating] = useState(0);
+  const [viewState, setViewState] = useState({
+    longitude: 77.7523,
+    latitude: 20.9320,
+    zoom: 12,
+  })
 
   useEffect(() => {
 
@@ -83,21 +88,16 @@ function App() {
   return (
     <div className='App'>
       <Map
-        initialViewState={{
-          longitude: 77.7523,
-          latitude: 20.9320,
-          zoom: 14,
-          
-        }}
+        {...viewState}
+        onMove={evt => setViewState(evt.viewState)}
         // {...initialViewState}
-        
         style={{ width: "100vw", height: "100vh"  }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         onDblClick = {handelAddClick}
         // transitionDuration = "200"
-      >
-
+        >
+          <GeolocateControl position='bottom-right' trackUserLocation='true'  showAccuracyCircle={false}></GeolocateControl>
         {pins.map((p) => (
           <>
             <Marker longitude={p.long} latitude={p.lat} anchor="bottom">
