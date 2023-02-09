@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { useRef } from "react";
 import axios from "axios";
-import messDekho1 from "../assets/messDekho1.svg"
+// import messDekho1 from "../assets/messDekho1.svg"
 
 export default function Login({setShowLogin, myStorage, setCurrentUser}) {
 
