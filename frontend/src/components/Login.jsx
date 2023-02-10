@@ -22,7 +22,7 @@ export default function Login({setShowLogin, myStorage, setCurrentUser}) {
         }
 
         try {
-            const res = await axios.post("https://messdekho.onrender.com/users/login", user);
+            const res = await axios.post("https://messdekho.onrender.com/api/users/login", user);
             myStorage.setItem("user", res.data.username)
             setCurrentUser(res.data.username);
             setShowLogin(false);
