@@ -88,8 +88,7 @@ function App() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         onDblClick = {handelAddClick}
-        onTouchStart = {handelAddClick}
-        
+        // onTouchStart = {handelAddClick}
         // transitionDuration = "200"
         >
           <GeolocateControl position='bottom-right' trackUserLocation='true'  showAccuracyCircle={false}></GeolocateControl>
