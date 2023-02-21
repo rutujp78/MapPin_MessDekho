@@ -7,16 +7,9 @@ import axios from "axios";
 import * as timeago from "timeago.js";
 import Register from './components/Register';
 import Login from './components/Login';
-// import { DoubleClickZoomHandler } from 'mapbox-gl';
 
 function App() {
 
-  // const [initialViewState, setInitialViewState] = useState({
-  //   longitude: 77.7523,
-  //   latitude: 20.9320,
-  //   zoom: 14
-  // });
-  // const [showPopup, setShowPopup] = React.useState(true);
   const myStorage = window.localStorage;
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -95,6 +88,8 @@ function App() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         onDblClick = {handelAddClick}
+        onTouchStart = {handelAddClick}
+        
         // transitionDuration = "200"
         >
           <GeolocateControl position='bottom-right' trackUserLocation='true'  showAccuracyCircle={false}></GeolocateControl>
