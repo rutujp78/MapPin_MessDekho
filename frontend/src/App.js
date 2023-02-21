@@ -20,6 +20,7 @@ function App() {
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [rating, setRating] = useState(0);
+  // const [touches, setTouches] = useState(0);
   const [viewState, setViewState] = useState({
     longitude: 77.7523,
     latitude: 20.9320,
@@ -78,6 +79,15 @@ function App() {
     setCurrentUser(null);
   }
 
+  let touches = 0;
+  const handleTouch = (e) => {
+    touches++;
+    if(touches===2) {
+      touches = 0;
+      handelAddClick(e);
+    }
+  }
+
   return (
     <div className='App'>
       <Map
@@ -88,7 +98,7 @@ function App() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         onDblClick = {handelAddClick}
-        // onTouchStart = {handelAddClick}
+        onTouchStart = {handleTouch}
         // transitionDuration = "200"
         >
           <GeolocateControl position='bottom-right' trackUserLocation='true'  showAccuracyCircle={false}></GeolocateControl>
