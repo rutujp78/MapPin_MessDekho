@@ -1,12 +1,17 @@
 const router = require("express").Router();
+const verifyToken = require("../middleware/auth");
 const Pin = require("../models/Pin");
 
 //create a pin
-router.post("/", async (req,res)=>{
+router.post("/", verifyToken, async (req,res)=>{
+    const user = req.user;
     const newPin = new Pin(req.body);
     try {
-        const savedPin = await newPin.save();
-        res.status(200).json(savedPin);
+        if(user.username===newPin.username) {
+            const savedPin = await newPin.save();
+            res.status(200).json(savedPin);
+        }
+        else res.status(403).json("You are not allowed to add pin to map")
     } catch (error) {
         res.status(500).json(error);
     }

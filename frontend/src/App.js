@@ -10,10 +10,12 @@ import Login from './components/Login';
 
 function App() {
 
-  const myStorage = window.localStorage;
+  // const myStorage = window.localStorage;
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
+  // const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
+  const [currentUser, setCurrentUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -32,6 +34,7 @@ function App() {
     const getPins = async () => {
       try {
         const res = await axios.get("https://messdekho.onrender.com/api/pins");
+        // const res = await axios.get("http://localhost:5000/api/pins");
         setPins(res.data);
       } catch (error) {
         console.log(error);
@@ -65,7 +68,8 @@ function App() {
     }
 
     try {
-      const res = await axios.post("https://messdekho.onrender.com/api/pins", newPin);
+      const res = await axios.post("https://messdekho.onrender.com/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
+      // const res = await axios.post("http://localhost:5000/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (error) {
@@ -74,9 +78,15 @@ function App() {
 
   }
 
+  // const handleLogout = () => {
+  //   myStorage.removeItem("user");
+  //   setCurrentUser(null);
+  // }
   const handleLogout = () => {
-    myStorage.removeItem("user");
+    // myStorage.removeItem("user");
+    // cookies.remove("messdekho");
     setCurrentUser(null);
+    setToken(null);
   }
 
   let touches = 0;
@@ -138,7 +148,7 @@ function App() {
             {/* )} */}
           </>
         ))}
-        {newPlace && (
+        {(newPlace && currentUser) && (
 
           <Popup
           latitude={newPlace.lat}
@@ -177,7 +187,8 @@ function App() {
 
         )}
         {showRegister && (<Register setShowRegister={setShowRegister}/>)}
-        {showLogin && (<Login setShowLogin={setShowLogin} myStorage={myStorage} setCurrentUser={setCurrentUser}/>)}
+        {/* {showLogin && (<Login setShowLogin={setShowLogin} myStorage={myStorage} setCurrentUser={setCurrentUser} setToken={setToken}/>)} */}
+        {showLogin && (<Login setShowLogin={setShowLogin} setCurrentUser={setCurrentUser} setToken={setToken}/>)}
       </Map>
     </div>
   );

@@ -35,7 +35,7 @@ export default function Register({setShowRegister}) {
         <div className="registerContainer">
             <div className="logo">
                 <RoomIcon/>
-                DarkRaider's Pin
+                MessDekho
             </div>
             <form onSubmit={handelSubmit}>
                 <input type="text" placeholder="username" ref={nameRef}/>

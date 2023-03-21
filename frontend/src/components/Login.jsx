@@ -4,15 +4,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { useRef } from "react";
 import axios from "axios";
-// import messDekho1 from "../assets/messDekho1.svg"
 
-export default function Login({setShowLogin, myStorage, setCurrentUser}) {
+// export default function Login({setShowLogin, myStorage, setCurrentUser, setToken}) {
+export default function Login({setShowLogin, setCurrentUser, setToken}) {
 
     // const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const nameRef = useRef()
     // const emailRef = useRef()
     const passwordRef = useRef();
+
+    // const cookies = new Cookies();
 
     const handelSubmit = async (e) => {
         e.preventDefault();
@@ -23,8 +25,13 @@ export default function Login({setShowLogin, myStorage, setCurrentUser}) {
 
         try {
             const res = await axios.post("https://messdekho.onrender.com/api/users/login", user);
-            myStorage.setItem("user", res.data.username)
+            // const res = await axios.post("http://localhost:5000/api/users/login", user);
+            // myStorage.setItem("user", res.data.username)
             setCurrentUser(res.data.username);
+            // cookies.set("messdekho", res.data.token, {
+            //     expires: new Date(Date.now()*1000)
+            // })
+            setToken(res.data.token);
             setShowLogin(false);
             setError(false);
         } catch (error) {
@@ -37,7 +44,7 @@ export default function Login({setShowLogin, myStorage, setCurrentUser}) {
         <div className="loginContainer">
             <div className="logo">
                 <RoomIcon/>
-                DarkRaider's Pin
+                MessDekho
                 {/* <img src={messDekho1} alt="" /> */}
             </div>
             <form onSubmit={handelSubmit}>
