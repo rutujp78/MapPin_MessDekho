@@ -25,15 +25,6 @@ router.post("/register", async (req,res)=>{
     }
 })
 
-// Refresh Token
-// router.post("/refresh", (req, res) => {
-//     // take the refresh token from the user
-//     const refreshToken = req.body.token;
-
-//     // send error if there is no token or it's invalid
-//     if(!refreshToken) res.status(401).send("You are not authenticated");
-// });
-
 //login
 router.post("/login", async (req,res)=>{
     try {
@@ -45,15 +36,15 @@ router.post("/login", async (req,res)=>{
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) return res.status(400).json("Wrong username or password");
 
-        const token = jwt.sign({
+        const token = await jwt.sign({
             email: user.email, 
             username: user.username
         }, process.env.SECRET_KEY);
 
         //send res
-        // res.status(200).json({_id: user._id, username: user.username});
         res.cookie("messdekho", token, {
             expires: new Date(Date.now() + 25892000000),
+            secure: true,
             httpOnly: true,
         })
         res.status(200).json({_id: user._id, username: user.username, token: token});

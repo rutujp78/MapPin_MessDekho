@@ -10,10 +10,8 @@ import Login from './components/Login';
 
 function App() {
 
-  // const myStorage = window.localStorage;
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  // const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState(null);
   const [pins, setPins] = useState([]);
@@ -22,7 +20,6 @@ function App() {
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [rating, setRating] = useState(0);
-  // const [touches, setTouches] = useState(0);
   const [viewState, setViewState] = useState({
     longitude: 77.7523,
     latitude: 20.9320,
@@ -78,13 +75,7 @@ function App() {
 
   }
 
-  // const handleLogout = () => {
-  //   myStorage.removeItem("user");
-  //   setCurrentUser(null);
-  // }
   const handleLogout = () => {
-    // myStorage.removeItem("user");
-    // cookies.remove("messdekho");
     setCurrentUser(null);
     setToken(null);
   }
@@ -111,7 +102,7 @@ function App() {
         onTouchStart = {handleTouch}
         // transitionDuration = "200"
         >
-          <GeolocateControl position='bottom-right' trackUserLocation='true'  showAccuracyCircle={false}></GeolocateControl>
+          <GeolocateControl position='bottom-right' trackUserLocation='true'  showAccuracyCircle={false} fitBoundsOptions={{zoom: 15}}></GeolocateControl>
         {pins.map((p) => (
           <>
             <Marker longitude={p.long} latitude={p.lat} anchor="bottom">
@@ -120,7 +111,6 @@ function App() {
                 onClick={() => handleMarkerClick(p._id,p.lat,p.long)}
               />
             </Marker>
-            {/* {p._id === currentPlaceId && ( */}
             {p._id === currentPlaceId && (
               <Popup 
               longitude={p.long} 
@@ -187,7 +177,6 @@ function App() {
 
         )}
         {showRegister && (<Register setShowRegister={setShowRegister}/>)}
-        {/* {showLogin && (<Login setShowLogin={setShowLogin} myStorage={myStorage} setCurrentUser={setCurrentUser} setToken={setToken}/>)} */}
         {showLogin && (<Login setShowLogin={setShowLogin} setCurrentUser={setCurrentUser} setToken={setToken}/>)}
       </Map>
     </div>
