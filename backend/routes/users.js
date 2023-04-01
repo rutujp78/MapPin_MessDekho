@@ -44,9 +44,9 @@ router.post("/login", async (req,res)=>{
         //send res
         res.cookie("messdekho", token, {
             expires: new Date(Date.now() + 25892000000),
-            httpOnly: false,
-            secure: false,
         })
+        // httpOnly: false,
+        // secure: false,
         res.status(200).json({_id: user._id, username: user.username, token: token});
     } catch (error) {
         return res.status(500).json(error);
