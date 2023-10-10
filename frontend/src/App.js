@@ -12,8 +12,15 @@ function App() {
 
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [token, setToken] = useState();
+  
+  // Local Storage
+  const myStorage = window.localStorage;
+
+  // For authentication and authorization stuff
+  const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
+  const [token, setToken] = useState(myStorage.getItem("token"));
+
+  // For Pins
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -75,6 +82,8 @@ function App() {
   }
 
   const handleLogout = () => {
+    myStorage.removeItem("user");
+    myStorage.removeItem("token");
     setCurrentUser(null);
     setToken(null);
   }
@@ -176,7 +185,7 @@ function App() {
 
         )}
         {showRegister && (<Register setShowRegister={setShowRegister}/>)}
-        {showLogin && (<Login setShowLogin={setShowLogin} setCurrentUser={setCurrentUser} setToken={setToken}/>)}
+        {showLogin && (<Login setShowLogin={setShowLogin} setCurrentUser={setCurrentUser} setToken={setToken} myStorage={myStorage}/>)}
       </Map>
     </div>
   );
