@@ -19,8 +19,12 @@ export default function Login({setShowLogin, setCurrentUser, setToken}) {
         }
 
         try {
-            const res = await axios.post("https://messdekho.onrender.com/api/users/login", user);
-            // const res = await axios.post("http://localhost:5000/api/users/login", user);
+            // const res = await axios.post("https://messdekho.onrender.com/api/users/login", user);
+            const res = await axios.post("http://localhost:5000/api/users/login", user);
+            // const cookieString = res.headers.get('Set-Cookie');
+            // debugger;
+            // document.cookie = cookieString;
+            // console.log(res);
 
             setCurrentUser(res.data.username);
             setToken(res.data.token);
@@ -35,13 +39,13 @@ export default function Login({setShowLogin, setCurrentUser, setToken}) {
 
     return (
         <div className="loginContainer">
-            <div className="logo">
+            <div className="loginLogo">
                 <RoomIcon/>
                 MessDekho
             </div>
             <form onSubmit={handelSubmit}>
-                <input type="text" placeholder="username" ref={nameRef}/>
-                <input type="password" placeholder="password" ref={passwordRef}/>
+                <input id="loginInputs" type="text" placeholder="username" ref={nameRef}/>
+                <input id="loginInputs" type="password" placeholder="password" ref={passwordRef}/>
                 <button className="loginButton">Login</button>
 
                 {error && (

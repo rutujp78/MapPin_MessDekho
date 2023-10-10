@@ -2,6 +2,10 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cookieParse = require("cookie-parser");
+
+
+// router.use(cookieParse());
 
 //register
 router.post("/register", async (req,res)=>{
@@ -42,11 +46,10 @@ router.post("/login", async (req,res)=>{
         }, process.env.SECRET_KEY);
 
         //send res
-        res.cookie("messdekho", token, {
-            expires: new Date(Date.now() + 25892000000),
-            httpOnly: true,
-            secure: true,
-        })
+        // res.cookie("messdekho", token, {
+        //     secure,
+        //     sameSite
+        // })
         res.status(200).json({_id: user._id, username: user.username, token: token});
     } catch (error) {
         return res.status(500).json(error);

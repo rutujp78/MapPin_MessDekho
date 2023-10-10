@@ -13,7 +13,7 @@ function App() {
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState();
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -25,13 +25,12 @@ function App() {
     latitude: 20.9320,
     zoom: 12,
   })
-
+  
   useEffect(() => {
-
     const getPins = async () => {
       try {
-        const res = await axios.get("https://messdekho.onrender.com/api/pins");
-        // const res = await axios.get("http://localhost:5000/api/pins");
+        // const res = await axios.get("https://messdekho.onrender.com/api/pins");
+        const res = await axios.get("http://localhost:5000/api/pins");
         setPins(res.data);
       } catch (error) {
         console.log(error);
@@ -65,8 +64,8 @@ function App() {
     }
 
     try {
-      const res = await axios.post("https://messdekho.onrender.com/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
-      // const res = await axios.post("http://localhost:5000/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
+      // const res = await axios.post("https://messdekho.onrender.com/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
+      const res = await axios.post("http://localhost:5000/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (error) {
@@ -171,8 +170,8 @@ function App() {
           <button className='button logout' onClick={handleLogout}>Log out</button>
         ) : (
           <div className='buttons'>
-            <button className='button login' onClick={()=>setShowLogin(true)}>Login</button>
-            <button className='button register' onClick={()=>setShowRegister(true)}>Register</button>
+            <button className='button login' onClick={()=>{setShowLogin(true);setShowRegister(false)}}>Login</button>
+            <button className='button register' onClick={()=>{setShowRegister(true);setShowLogin(false)}}>Register</button>
           </div>
 
         )}

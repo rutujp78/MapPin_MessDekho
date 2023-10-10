@@ -22,7 +22,8 @@ export default function Register({setShowRegister}) {
         }
 
         try {
-            await axios.post("https://messdekho.onrender.com/api/users/register", newUser);
+            // await axios.post("https://messdekho.onrender.com/api/users/register", newUser);
+            await axios.post("http:localhost:5000/api/users/register", newUser);
             setError(false);
             setSuccess(true);
         } catch (error) {
@@ -33,14 +34,14 @@ export default function Register({setShowRegister}) {
 
     return (
         <div className="registerContainer">
-            <div className="logo">
+            <div className="registerLogo">
                 <RoomIcon/>
                 MessDekho
             </div>
             <form onSubmit={handelSubmit}>
-                <input type="text" placeholder="username" ref={nameRef}/>
-                <input type="email" placeholder="email" ref={emailRef}/>
-                <input type="password" placeholder="password" ref={passwordRef}/>
+                <input id="registerInputs" type="text" placeholder="username" ref={nameRef}/>
+                <input id="registerInputs" type="email" placeholder="email" ref={emailRef}/>
+                <input id="registerInputs" type="password" placeholder="password" ref={passwordRef}/>
                 <button className="registerButton">Register</button>
 
                 {success && (
