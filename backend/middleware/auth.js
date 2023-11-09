@@ -11,6 +11,8 @@ const verifyToken  = async (req,res,next) => {
             token = token.slice(7, token.length).trimLeft();
         }
         const verified = jwt.verify(token, process.env.SECRET_KEY);
+        // verified contains payload of token
+        // console.log(verified);
         req.user = verified;
         next();
     } catch (error) {
