@@ -27,4 +27,15 @@ router.get("/", async (req,res)=>{
     }
 })
 
+// Edit pin
+router.put("/editpin", verifyToken, async (req, pin) => {
+    try {
+        const user = req.user;
+        const pin = [...req.body];
+        
+    } catch (error) {
+        
+    }
+})
+
 module.exports = router;
