@@ -52,7 +52,7 @@
     cursor: pointer;
 }
 
-input {
+#registerInputs {
    border: slateblue solid 1px;
    border-radius: 10px; 
    margin: 5px 0px;
