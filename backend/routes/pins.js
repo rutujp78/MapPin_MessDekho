@@ -28,13 +28,29 @@ router.get("/", async (req,res)=>{
 })
 
 // Edit pin
-router.put("/editpin", verifyToken, async (req, pin) => {
+router.put("/editpin", verifyToken, async (req, res) => {
     try {
-        const user = req.user;
-        const pin = [...req.body];
+
+        // const user = req.user;
+        const pinId = req.body._id;
+        let editedPin = await Pin.findByIdAndUpdate(pinId, req.body);
+        editedPin = await Pin.findById(pinId);
+        res.status(200).json(editedPin);
         
     } catch (error) {
-        
+        res.status(500).json(error);
+    }
+})
+
+//Delete Pin
+router.delete("/deletepin/:id", verifyToken, async (req, res) => {
+    try {
+        const pinId = req.params.id;
+        const deletedPin = await Pin.deleteOne({_id: pinId});
+
+        res.status(200).send(deletedPin);
+    } catch (error) {
+        res.status(500).json(error);
     }
 })
 
