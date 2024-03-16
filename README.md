@@ -50,5 +50,11 @@ MessDekho is designed to streamline the process of finding and sharing informati
 
 *Add Pin*
 
+## Architecture
+
+<img src="https://github.com/rutujp78/MapPin_MessDekho/assets/76244494/9768c576-460e-46d1-8c31-70109446caaf" alt="architecture" width="540"/>
+
+## MongoDB Collection Schema
+<img src="https://github.com/rutujp78/MapPin_MessDekho/assets/76244494/6674a655-ed6b-42d9-80cd-fa160448020b" alt="mongodb-collection-schema" width="360"/>
 
 <!-- [Add more demo screenshots and captions as needed] -->
