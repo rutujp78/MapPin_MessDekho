@@ -40,8 +40,8 @@ function App() {
   useEffect(() => {
     const getPins = async () => {
       try {
-        // const res = await axios.get("https://messdekho.onrender.com/api/pins");
-        const res = await axios.get("http://localhost:5000/api/pins");
+        const res = await axios.get("https://messdekho.onrender.com/api/pins");
+        // const res = await axios.get("http://localhost:5000/api/pins");
         setPins(res.data);
       } catch (error) {
         console.log(error);
@@ -75,8 +75,8 @@ function App() {
     }
 
     try {
-      // const res = await axios.post("https://messdekho.onrender.com/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
-      const res = await axios.post("http://localhost:5000/api/pins", newPin, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await axios.post("https://messdekho.onrender.com/api/pins", newPin, { headers: { Authorization: `Bearer ${token}`}});
+      // const res = await axios.post("http://localhost:5000/api/pins", newPin, { headers: { Authorization: `Bearer ${token}` } });
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (error) {
@@ -96,7 +96,8 @@ function App() {
       rating: rating === 0 ? pin.rating : rating,
     }
 
-    const editPin = await axios.put("http://localhost:5000/api/pins/editpin", editedPin, { headers: { Authorization: `Bearer ${token}` } });
+    const editPin = await axios.put("https://messdekho.onrender.com/api/pins/editpin", editedPin, { headers: { Authorization: `Bearer ${token}` } });
+    // const editPin = await axios.put("http://localhost:5000/api/pins/editpin", editedPin, { headers: { Authorization: `Bearer ${token}` } });
     pin.title = editPin.data.title;
     pin.desc = editPin.data.desc;
     pin.rating = editPin.data.rating;
@@ -111,7 +112,8 @@ function App() {
 
   const deletePin = async (pin) => {
     const pinId= pin._id;
-    const deletedPin = await axios.delete(`http://localhost:5000/api/pins/deletepin/${pinId}`, { headers: { Authorization: `Bearer ${token}` } });
+    const deletedPin = await axios.delete(`https://messdekho.onrender.com/api/pins/deletepin/${pinId}`, { headers: { Authorization: `Bearer ${token}` } });
+    // const deletedPin = await axios.delete(`http://localhost:5000/api/pins/deletepin/${pinId}`, { headers: { Authorization: `Bearer ${token}` } });
     setIsDelete(false);
     window.location.reload();
   }
