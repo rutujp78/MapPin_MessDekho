@@ -125,13 +125,23 @@ function App() {
     setToken(null);
   }
 
-  let touches = 0;
+  const [lastTouch, setLastTouch] = useState(0);
+
+  // let touches = 0;
   const handleTouch = (e) => {
-    touches++;
-    if (touches === 2) {
-      touches = 0;
+    // touches++;
+    // if (touches === 2) {
+    //   touches = 0;
+    //   handelAddClick(e);
+    // }
+    const currentTime = new Date().getTime();
+    const timeSinceLastTouch = currentTime - lastTouch;
+
+    if (timeSinceLastTouch < 400 && timeSinceLastTouch > 0) {
       handelAddClick(e);
     }
+
+    setLastTouch(currentTime);
   }
 
   return (
@@ -145,6 +155,7 @@ function App() {
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         onDblClick={handelAddClick}
         onTouchStart={handleTouch}
+        doubleClickZoom={false}
       // transitionDuration = "200"
       >
         <GeolocateControl position='bottom-right' trackUserLocation='true' showAccuracyCircle={false} fitBoundsOptions={{ zoom: 15 }}></GeolocateControl>
