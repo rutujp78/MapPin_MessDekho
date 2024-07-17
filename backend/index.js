@@ -1,19 +1,21 @@
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
-const pinRoute = require("./routes/pins");
-const userRoute = require("./routes/users");
-const cors = require("cors");
 const { connectDB } = require("./utils/connectDB");
+const { middlewareConfig } = require("./middleware/middlewareConfig");
+const { configEnv } = require("./configs/configEnv");
+const { configRoutes } = require("./routes/configRoutes");
 
-dotenv.config();
-app.use(cors());
-app.use(express.json());
+// config env (dotenv)
+configEnv();
 
+// cors, express.json
+middlewareConfig(app);
+
+// connect to db
 connectDB();
 
-app.use("/api/users", userRoute);
-app.use("/api/pins", pinRoute);
+// routes
+configRoutes(app);
 
 app.listen(5000, ()=>{
     console.log("Backend server is running");

@@ -17,7 +17,6 @@ const register = async (req,res)=>{
         //save user and send response
         const user = await newUsr.save();
         res.status(200).json(user._id);
-
     } catch (error) {
         res.status(500).json(error);
     }
