@@ -25,15 +25,15 @@ const getAllPins = async (req,res)=>{
 
 const updatePin = async (req, res) => {
     try {
-
         // const user = req.user;
         const pinId = req.body._id;
-        let editedPin = await Pin.findByIdAndUpdate(pinId, req.body);
-        editedPin = await Pin.findById(pinId);
-        res.status(200).json(editedPin);
-        
+        const resPin = await Pin.findByIdAndUpdate(pinId, req.body);
+        console.log(resPin);
+        const editedPin = await Pin.findById(pinId);
+        console.log(editedPin);
+        res.status(200).json({ editedPin, success: true });
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json({ error, success: false });
     }
 };
 
@@ -41,10 +41,9 @@ const deletePin = async (req, res) => {
     try {
         const pinId = req.params.id;
         const deletedPin = await Pin.deleteOne({_id: pinId});
-
         res.status(200).send(deletedPin);
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json({ error, success: false });
     }
 };
 

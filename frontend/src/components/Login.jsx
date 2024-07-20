@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import axios from "axios";
 
-export default function Login({setShowLogin, setCurrentUser, setToken, myStorage}) {
+export default function Login({setShowLogin, setCurrentUser, setToken}) {
 
     const [error, setError] = useState(false);
     const nameRef = useRef()
@@ -19,20 +19,18 @@ export default function Login({setShowLogin, setCurrentUser, setToken, myStorage
         }
 
         try {
-            const res = await axios.post("https://messdekho.onrender.com/api/users/login", user);
-            // const res = await axios.post("http://localhost:5000/api/users/login", user);
+            // const res = await axios.post("https://messdekho.onrender.com/api/users/login", user);
+            const res = await axios.post("http://localhost:5000/api/users/login", user);
 
-            myStorage.setItem("user", res.data.username);
-            myStorage.setItem("token", res.data.token);
+            localStorage.setItem("token", res.data.token);
             setCurrentUser(res.data.username);
             setToken(res.data.token);
             setShowLogin(false);
             setError(false);
-
         } catch (error) {
             setError(true);
+            console.log("Error in login", error);
         }
-
     }
 
     return (
