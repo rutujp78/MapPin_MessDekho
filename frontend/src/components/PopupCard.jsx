@@ -31,8 +31,8 @@ const PopupCard = ({ currentUser, pin }) => {
                         {Array(pin.rating).fill(<StarIcon className='star' />)}
                     </div>
                     <label>Info</label>
-                    <span className='username'>Created by <b>{pin.username}</b></span>
-                    <span className='date'>{timeago.format(pin.createdAt)}</span>
+                    <span className='username'>{pin.createdAt !== pin.updatedAt ? "Edited " : "Created "} by <b>{pin.username}</b></span>
+                    <span className='date'>{timeago.format(pin.createdAt !== pin.updatedAt ? pin.updatedAt : pin.createdAt)}</span>
                 </div>
             )}
             {isDelete && (
