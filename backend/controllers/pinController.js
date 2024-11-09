@@ -1,7 +1,5 @@
 const Pin = require("../models/Pin");
-// const cacheService = require("../cacheService/cacheService");
-const NodeCache = require("node-cache");
-const nodeCache = new NodeCache();
+const redisClient = require("../utils/redisClient").redisClient;
 
 const createPin = async (req,res)=>{
     const user = req.user;
@@ -9,7 +7,7 @@ const createPin = async (req,res)=>{
     try {
         if(user.username===newPin.username) {
             const savedPin = await newPin.save();
-            nodeCache.del("pins");
+            await redisClient.set("pins", null);
             res.status(200).json(savedPin);
         }
         else res.status(403).json("You are not allowed to add pin to map")
@@ -20,13 +18,13 @@ const createPin = async (req,res)=>{
 
 const getAllPins = async (req,res)=>{
     try {
-        let pins;
-        if(nodeCache.has("pins")) {
-            pins = JSON.parse(nodeCache.get("pins"));
+        let pins = await redisClient.get("pins");
+        if(pins) {
+            pins = JSON.parse(pins);
         }
         else {
             pins = await Pin.find();
-            nodeCache.set("pins", JSON.stringify(pins));
+            await redisClient.set("pins", JSON.stringify(pins));
         }
         return res.status(200).json(pins);
     } catch (error) {
@@ -42,7 +40,7 @@ const updatePin = async (req, res) => {
         console.log(resPin);
         const editedPin = await Pin.findById(pinId);
         console.log(editedPin);
-        nodeCache.del("pins");
+        await redisClient.set("pins", null);
         res.status(200).json({ editedPin, success: true });
     } catch (error) {
         res.status(500).json({ error, success: false });
@@ -53,7 +51,7 @@ const deletePin = async (req, res) => {
     try {
         const pinId = req.params.id;
         const deletedPin = await Pin.deleteOne({_id: pinId});
-        nodeCache.del("pins");
+        await redisClient.set("pins", null);
         res.status(200).send(deletedPin);
     } catch (error) {
         res.status(500).json({ error, success: false });

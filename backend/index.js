@@ -4,6 +4,7 @@ const { connectDB } = require("./utils/connectDB");
 const { middlewareConfig } = require("./middleware/middlewareConfig");
 const { configEnv } = require("./configs/configEnv");
 const { configRoutes } = require("./routes/configRoutes");
+const { initRedis } = require("./utils/redisClient");
 
 // config env (dotenv)
 configEnv();
@@ -13,6 +14,7 @@ middlewareConfig(app);
 
 // connect to db
 connectDB();
+initRedis();
 
 // routes
 configRoutes(app);
